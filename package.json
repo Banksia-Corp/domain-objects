@@ -1,0 +1,43 @@
+{
+  "name": "@banksia/domain-objects",
+  "version": "0.0.0",
+  "description": "Enterprise-grade Domain-Driven Design (DDD) primitives and building blocks for TypeScript",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch",
+    "format": "prettier --write .",
+    "lint": "prettier --check \"src/**/*\" \"tests/**/*\" README.md",
+    "test": "vitest run"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Banksia-Corp/domain-objects.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Banksia-Corp/domain-objects/issues"
+  },
+  "homepage": "https://github.com/Banksia-Corp/domain-objects#readme",
+  "license": "MIT",
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "@rslib/core": "^0.23.2",
+    "@types/node": "^26.2.0",
+    "prettier": "^3.8.3",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
+  }
+}
