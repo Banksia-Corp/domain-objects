@@ -1,6 +1,7 @@
 {
   "name": "@banksia/domain-objects",
   "version": "0.0.0",
+  "packageManager": "pnpm@10.28.0",
   "description": "Enterprise-grade Domain-Driven Design (DDD) primitives and building blocks for TypeScript",
   "type": "module",
   "exports": {
@@ -18,7 +19,8 @@
     "dev": "rslib build --watch",
     "format": "prettier --write .",
     "lint": "prettier --check \"src/**/*\" \"tests/**/*\" README.md",
-    "test": "vitest run"
+    "test": "vitest run",
+    "release": "pnpm run build && changeset publish"
   },
   "publishConfig": {
     "access": "public"
@@ -33,6 +35,7 @@
   "homepage": "https://github.com/Banksia-Corp/domain-objects#readme",
   "license": "MIT",
   "devDependencies": {
+    "@changesets/changelog-git": "^1.0.0",
     "@changesets/cli": "^2.27.1",
     "@rslib/core": "^0.23.2",
     "@types/node": "^26.2.0",
