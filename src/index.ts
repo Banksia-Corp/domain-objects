@@ -13,7 +13,7 @@
  *
  * @example
  * ```ts
- * import { AggregateRoot, ValueObject, IDomainEvent, IRepository } from 'domain-objects';
+ * import { AggregateRoot, ValueObject, IDomainEvent, IRepository } from '@banksia/domain-objects';
  * ```
  *
  * @packageDocumentation
