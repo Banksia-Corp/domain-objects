@@ -1,10 +1,10 @@
-# `domain-objects`
+# `@banksia/domain-objects`
 
 > Foundational Domain-Driven Design (DDD) building blocks for authoring expressive, type-safe, and invariant-protected domain models in TypeScript.
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
-[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero-green.svg)](<>)
-[![Runtime Agnostic](https://img.shields.io/badge/Runtime-Node%20%7C%20Cloudflare%20Workers%20%7C%20Browser-purple.svg)](<>)
+[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero-green.svg)](https://github.com/Banksia-Corp/domain-objects)
+[![Runtime Agnostic](https://img.shields.io/badge/Runtime-Node%20%7C%20Cloudflare%20Workers%20%7C%20Browser-purple.svg)](https://github.com/Banksia-Corp/domain-objects)
 
 ---
 
@@ -24,7 +24,7 @@
 - [Runtime Validation & Invariant Protection](#runtime-validation--invariant-protection)
 - [Application Service Orchestration (Command Pattern)](#application-service-orchestration-command-pattern)
 - [Infrastructure & Persistence Patterns (Cloudflare D1)](#infrastructure--persistence-patterns-cloudflare-d1)
-- [Reactive UI Integration with `@platform/signals`](#reactive-ui-integration-with-platformsignals)
+- [Reactive UI Integration with `@banksia/signals`](#reactive-ui-integration-with-banksiasignals)
 - [API Reference Matrix](#api-reference-matrix)
 - [Development & Testing](#development--testing)
 
@@ -34,7 +34,7 @@
 
 In fast-growing software systems, business logic often scatters across ad-hoc API route handlers, UI components, raw SQL queries, and ORM lifecycle hooks. Data objects degenerate into "anemic" property bags where invariants can be bypassed and inconsistent states become possible.
 
-`domain-objects` provides zero-dependency base classes to enforce tactical Domain-Driven Design (DDD) in modern TypeScript:
+`@banksia/domain-objects` provides zero-dependency base classes to enforce tactical Domain-Driven Design (DDD) in modern TypeScript:
 
 - **Encapsulated Invariants**: Business validation and rules live directly inside the domain model, preventing invalid state from ever existing.
 - **Explicit Consistency Boundaries**: Aggregate roots isolate transactional boundaries, ensuring multi-entity state mutations remain atomic.
@@ -43,13 +43,13 @@ In fast-growing software systems, business logic often scatters across ad-hoc AP
 
 ### Rich Domain Models vs. Anemic Data Bags
 
-| Dimension             | Anemic Data Bag Approach ❌                            | Rich Domain Model Approach (`domain-objects`) ✅        |
-| :-------------------- | :----------------------------------------------------- | :------------------------------------------------------ |
-| **Logic Placement**   | Procedural services, controllers, or database triggers | Encapsulated within domain entities and value objects   |
-| **State Validation**  | Fragmented across endpoints and forms                  | Guaranteed at instantiation and on state transition     |
-| **Identity vs Value** | Everything is a plain object or row ID                 | Explicit distinction between `Entity` and `ValueObject` |
-| **Side Effects**      | Ad-hoc service calls intertwined with mutations        | Recorded explicitly as `IDomainEvent` instances         |
-| **Testability**       | Requires database mocking or complex fixtures          | Pure in-memory unit tests without external I/O          |
+| Dimension             | Anemic Data Bag Approach ❌                            | Rich Domain Model Approach (`@banksia/domain-objects`) ✅ |
+| :-------------------- | :----------------------------------------------------- | :-------------------------------------------------------- |
+| **Logic Placement**   | Procedural services, controllers, or database triggers | Encapsulated within domain entities and value objects     |
+| **State Validation**  | Fragmented across endpoints and forms                  | Guaranteed at instantiation and on state transition       |
+| **Identity vs Value** | Everything is a plain object or row ID                 | Explicit distinction between `Entity` and `ValueObject`   |
+| **Side Effects**      | Ad-hoc service calls intertwined with mutations        | Recorded explicitly as `IDomainEvent` instances           |
+| **Testability**       | Requires database mocking or complex fixtures          | Pure in-memory unit tests without external I/O            |
 
 ### Architecture Topology
 
@@ -68,12 +68,28 @@ flowchart LR
 
 ## Installation
 
-Add `domain-objects` to your workspace project's `package.json`:
+Install `@banksia/domain-objects` using your package manager of choice:
+
+```bash
+# pnpm
+pnpm add @banksia/domain-objects
+
+# npm
+npm install @banksia/domain-objects
+
+# bun
+bun add @banksia/domain-objects
+
+# jsr
+npx jsr add @banksia/domain-objects
+```
+
+Or add it to your workspace `package.json`:
 
 ```json
 {
   "dependencies": {
-    "domain-objects": "workspace:*"
+    "@banksia/domain-objects": "workspace:*"
   }
 }
 ```
@@ -87,7 +103,7 @@ import {
   ValueObject,
   IDomainEvent,
   IRepository,
-} from "domain-objects";
+} from "@banksia/domain-objects";
 ```
 
 ---
@@ -103,7 +119,7 @@ import {
   ValueObject,
   IDomainEvent,
   IRepository,
-} from "domain-objects";
+} from "@banksia/domain-objects";
 
 // 1. Immutable Value Object: Money with currency safety
 export interface MoneyProps {
@@ -216,7 +232,7 @@ Value Objects describe concepts in your domain that have no persistent identity.
 - **Structural Equality (`equals`)**: Two value objects are identical if their serialized properties match, regardless of object reference.
 
 ```ts
-import { ValueObject } from "domain-objects";
+import { ValueObject } from "@banksia/domain-objects";
 
 export interface AddressProps {
   street: string;
@@ -264,7 +280,7 @@ Entities represent domain concepts defined not by their attributes, but by a uni
 - **Mutable Encapsulated State (`props`)**: Entity attributes can be modified through explicit domain methods.
 
 ```ts
-import { Entity } from "domain-objects";
+import { Entity } from "@banksia/domain-objects";
 
 export interface CustomerProps {
   name: string;
@@ -302,7 +318,7 @@ An Aggregate Root is a specialized `Entity` that acts as the single gateway for 
   - `aggregate.clearEvents()`: Clears the internal event buffer once events are published.
 
 ```ts
-import { AggregateRoot } from "domain-objects";
+import { AggregateRoot } from "@banksia/domain-objects";
 
 export class Order extends AggregateRoot<OrderProps> {
   public markAsPaid(): void {
@@ -386,7 +402,7 @@ Ensure domain objects never enter an invalid state by pairing constructors and s
 
 ```ts
 import { z } from "zod";
-import { ValueObject } from "domain-objects";
+import { ValueObject } from "@banksia/domain-objects";
 
 const EmailSchema = z.string().email().min(5).max(255);
 
@@ -416,7 +432,7 @@ console.log(email.value); // 'alice@example.com'
 Application Services (or Command Handlers) coordinate the end-to-end lifecycle: loading an aggregate from a repository, invoking domain logic, saving changes, and publishing domain events.
 
 ```ts
-import { IRepository, IDomainEvent } from "domain-objects";
+import { IRepository, IDomainEvent } from "@banksia/domain-objects";
 import { Order } from "./order-aggregate";
 
 export interface PlaceOrderCommand {
@@ -462,7 +478,7 @@ export class PlaceOrderService {
 Implement the [`IRepository<T>`](./src/repository.ts) interface using Cloudflare D1 or relational SQLite/Postgres. Map relational columns to and from domain aggregate instances cleanly:
 
 ```ts
-import { IRepository } from "domain-objects";
+import { IRepository } from "@banksia/domain-objects";
 import { Order, OrderItem, Money } from "./order-domain";
 
 export class D1OrderRepository implements IRepository<Order> {
@@ -574,12 +590,12 @@ export class D1OrderRepository implements IRepository<Order> {
 
 ---
 
-## Reactive UI Integration with `@platform/signals`
+## Reactive UI Integration with `@banksia/signals`
 
-For client-side domain stores and interactive applications, domain objects can be paired with `@platform/signals` for fine-grained, zero-boilerplate UI updates:
+For client-side domain stores and interactive applications, domain objects can be paired with `@banksia/signals` for fine-grained, zero-boilerplate UI updates:
 
 ```ts
-import { makeReactive } from "@platform/signals";
+import { makeReactive } from "@banksia/signals";
 import { Order } from "./order-domain";
 
 export class ReactiveOrderStore {
