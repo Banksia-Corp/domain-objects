@@ -1,6 +1,6 @@
 {
   "name": "@banksia/domain-objects",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "packageManager": "pnpm@10.28.0",
   "description": "Enterprise-grade Domain-Driven Design (DDD) primitives and building blocks for TypeScript",
   "type": "module",
