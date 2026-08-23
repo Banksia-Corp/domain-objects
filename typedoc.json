@@ -1,0 +1,10 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.ts"],
+  "out": "docs/api",
+  "tsconfig": "tsconfig.json",
+  "readme": "README.md",
+  "name": "@banksia/domain-objects API Documentation",
+  "excludePrivate": true,
+  "excludeInternal": true
+}
