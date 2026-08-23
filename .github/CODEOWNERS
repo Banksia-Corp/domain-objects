@@ -1,0 +1,7 @@
+# Global default code owner for repository
+* @luismiddleton
+
+# Critical repository workflows and release automation
+/.github/ @luismiddleton
+/.changeset/ @luismiddleton
+/scripts/ @luismiddleton
