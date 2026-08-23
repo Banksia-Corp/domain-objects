@@ -23,4 +23,5 @@ For in-depth guides, architectural principles, and policies, refer to the dedica
 - `pnpm run test` - Run Vitest test suite
 - `pnpm run lint` - Check formatting and code style with Prettier
 - `pnpm run format` - Format code with Prettier
+- `pnpm run size` - Check bundle size against configured limits via size-limit
 - `pnpm run release` - Build and publish package via Changesets

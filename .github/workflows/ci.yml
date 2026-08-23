@@ -49,5 +49,8 @@ jobs:
       - name: Validate Exports
         run: pnpm run check:exports
 
+      - name: Check Bundle Size
+        run: pnpm run size
+
       - name: Generate Docs
         run: pnpm run docs
