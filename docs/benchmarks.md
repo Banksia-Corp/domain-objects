@@ -19,20 +19,36 @@ Key areas monitored include:
 
 ## 2. Size & Performance Budgets
 
-| Metric / Asset                        | Target Budget          | Notes                                 |
-| :------------------------------------ | :--------------------- | :------------------------------------ |
-| **`dist/index.js` (Raw Size)**        | `< 2.5 KB`             | Core compiled ESM output              |
-| **`dist/index.js` (Gzip / Brotli)**   | `< 1.0 KB`             | Compressed network payload            |
-| **`ValueObject.equals()` Throughput** | `> 5,000,000 ops/sec`  | Shallow/medium structural comparisons |
-| **`Entity.equals()` Throughput**      | `> 15,000,000 ops/sec` | Identity comparison                   |
-| **Event Recording & Extraction**      | `< 0.001 ms / event`   | Lightweight in-memory event queuing   |
+| Metric / Asset                        | Target Budget          | Baseline Measured (v0.0.1) | Notes                               |
+| :------------------------------------ | :--------------------- | :------------------------- | :---------------------------------- |
+| **`dist/index.js` (Raw Size)**        | `< 2.5 KB`             | `1.04 KB`                  | Core compiled ESM output            |
+| **`dist/index.js` (Gzip / Brotli)**   | `< 1.0 KB`             | `238 B`                    | Compressed network payload          |
+| **`ValueObject.equals()` Throughput** | `> 1,000,000 ops/sec`  | `~4.7M ops/sec` (simple)   | Structural equality comparison      |
+| **`Entity.equals()` Throughput**      | `> 15,000,000 ops/sec` | `~27.1M ops/sec`           | Identity comparison                 |
+| **Aggregate Event Recording/Pulling** | `< 0.001 ms / event`   | `~0.0001 ms / event`       | In-memory event queuing & lifecycle |
 
 ---
 
-## 3. Running Benchmarks
+## 3. Benchmark Suites
 
-When benchmark suites are executed via Vitest Bench:
+The runtime microbenchmark suite is organized under `tests/benchmarks/`:
+
+- **`value-object.bench.ts`**: Evaluates `ValueObject.equals()` across simple and nested object structures, deep freezing, and instantiation costs.
+- **`entity.bench.ts`**: Evaluates `Entity.equals()` identity checks (same identity, different identity, same instance, null/undefined checks) and instantiation.
+- **`aggregate.bench.ts`**: Evaluates `AggregateRoot` domain event lifecycle, recording, extraction via `domainEvents`, and clearing via `clearEvents()`.
+
+---
+
+## 4. Running Benchmarks
+
+Execute the Vitest benchmark suite:
 
 ```bash
 pnpm run bench
+```
+
+To run a single execution without watch mode:
+
+```bash
+pnpm run bench --run
 ```

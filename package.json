@@ -19,6 +19,7 @@
     "dist"
   ],
   "scripts": {
+    "bench": "vitest bench",
     "build": "rslib build",
     "check:exports": "publint && attw --pack .",
     "dev": "rslib build --watch",
