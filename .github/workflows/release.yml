@@ -55,6 +55,7 @@ jobs:
           version: pnpm exec changeset version
           title: "chore(release): version packages"
           commit: "chore(release): version packages"
+          createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
