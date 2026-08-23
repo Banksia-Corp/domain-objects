@@ -4,10 +4,15 @@ export default defineConfig({
   lib: [
     {
       format: "esm",
-      syntax: ["node 18"],
+      syntax: "es2022",
       dts: {
         bundle: true,
       },
     },
   ],
+  output: {
+    sourceMap: {
+      js: "source-map",
+    },
+  },
 });
