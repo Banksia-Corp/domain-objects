@@ -7,18 +7,20 @@
   "engines": {
     "node": ">=22.0.0"
   },
+  "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/src/index.d.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     }
   },
-  "types": "./dist/src/index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "rslib build",
+    "check:exports": "publint && attw --pack .",
     "dev": "rslib build --watch",
     "docs": "typedoc",
     "docs:watch": "typedoc --watch",
@@ -40,11 +42,14 @@
   "homepage": "https://github.com/Banksia-Corp/domain-objects#readme",
   "license": "MIT",
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
     "@changesets/changelog-github": "^1.0.0",
     "@changesets/cli": "^2.27.1",
+    "@microsoft/api-extractor": "^7.59.0",
     "@rslib/core": "^0.23.2",
     "@types/node": "^26.2.0",
     "prettier": "^3.8.3",
+    "publint": "^0.3.24",
     "typedoc": "^0.28.20",
     "typescript": "^5.9.3",
     "vitest": "^4.1.10"

@@ -46,5 +46,8 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Validate Exports
+        run: pnpm run check:exports
+
       - name: Generate Docs
         run: pnpm run docs

@@ -5,6 +5,7 @@ You are an expert in JavaScript, Rspack, Rsbuild, Rslib, and library development
 ## Commands
 
 - `pnpm run build` - Build the library for production
+- `pnpm run check:exports` - Validate package exports and TypeScript declaration resolution
 - `pnpm run dev` - Turn on watch mode, watch for changes and rebuild the library
 
 ## Docs
@@ -22,3 +23,7 @@ You are an expert in JavaScript, Rspack, Rsbuild, Rslib, and library development
 ### Vitest
 
 - Run `pnpm run test` to test your code
+
+### publint & attw
+
+- Run `pnpm run check:exports` to validate package exports and TypeScript types resolution
