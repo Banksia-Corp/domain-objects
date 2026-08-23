@@ -16,6 +16,7 @@ For in-depth guides, architectural principles, and policies, refer to the dedica
 ## Essential Commands
 
 - `pnpm run build` - Build package via Rslib
+- `pnpm run bench` - Run Vitest runtime performance microbenchmarks
 - `pnpm run check:exports` - Validate package exports and TypeScript declaration resolution via publint and attw
 - `pnpm run dev` - Build in watch mode
 - `pnpm run docs` - Generate API documentation via TypeDoc
