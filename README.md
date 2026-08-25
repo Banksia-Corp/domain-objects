@@ -625,7 +625,7 @@ export class ReactiveOrderStore {
 ## Development & Testing
 
 ```bash
-# Install dependencies
+# Install dependencies & git hooks
 pnpm install
 
 # Run unit tests with Vitest
@@ -636,4 +636,7 @@ pnpm run build
 
 # Format codebase with Prettier
 pnpm run format
+
+# Check formatting & linting
+pnpm run lint
 ```
