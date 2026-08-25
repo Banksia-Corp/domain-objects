@@ -24,5 +24,23 @@ For in-depth guides, architectural principles, and policies, refer to the dedica
 - `pnpm run test` - Run Vitest test suite
 - `pnpm run lint` - Check formatting and code style with Prettier
 - `pnpm run format` - Format code with Prettier
+- `pnpm run prepare` - Install Lefthook Git hooks
 - `pnpm run size` - Check bundle size against configured limits via size-limit
 - `pnpm run release` - Build and publish package via Changesets
+
+---
+
+## Tools
+
+### Prettier
+
+- Run `pnpm run format` to format your code
+
+### Vitest
+
+- Run `pnpm run test` to test your code
+
+### Lefthook
+
+- Run `pnpm run prepare` to install Git hooks
+- Pre-commit hook automatically runs formatting and linting checks

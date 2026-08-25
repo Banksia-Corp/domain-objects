@@ -29,6 +29,7 @@
     "lint": "prettier --check \"src/**/*\" \"tests/**/*\" README.md",
     "size": "size-limit",
     "test": "vitest run",
+    "prepare": "lefthook install",
     "release": "pnpm run build && changeset publish"
   },
   "publishConfig": {
@@ -51,6 +52,7 @@
     "@rslib/core": "^0.23.2",
     "@size-limit/preset-small-lib": "^13.0.3",
     "@types/node": "^26.2.0",
+    "lefthook": "^2.1.10",
     "prettier": "^3.8.3",
     "publint": "^0.3.24",
     "size-limit": "^13.0.3",
