@@ -1,0 +1,17 @@
+[
+  {
+    "name": "introduction",
+    "type": "file",
+    "label": "Introduction & Architecture"
+  },
+  {
+    "name": "installation",
+    "type": "file",
+    "label": "Installation"
+  },
+  {
+    "name": "quick-start",
+    "type": "file",
+    "label": "Quick Start"
+  }
+]

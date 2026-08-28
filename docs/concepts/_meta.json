@@ -1,0 +1,32 @@
+[
+  {
+    "name": "entities",
+    "type": "file",
+    "label": "Entities & Identity"
+  },
+  {
+    "name": "value-objects",
+    "type": "file",
+    "label": "Value Objects"
+  },
+  {
+    "name": "aggregate-roots",
+    "type": "file",
+    "label": "Aggregate Roots"
+  },
+  {
+    "name": "domain-events",
+    "type": "file",
+    "label": "Domain Events"
+  },
+  {
+    "name": "repositories",
+    "type": "file",
+    "label": "Repositories"
+  },
+  {
+    "name": "validation",
+    "type": "file",
+    "label": "Validation & Invariants"
+  }
+]

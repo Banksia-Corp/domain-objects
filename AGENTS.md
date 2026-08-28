@@ -6,10 +6,10 @@ You are working on `@banksia/domain-objects`, an enterprise-grade Domain-Driven 
 
 For in-depth guides, architectural principles, and policies, refer to the dedicated documentation:
 
-- **[Semantic Versioning & Changeset Workflow](./docs/versioning-and-changesets.md)**: Rules for when changesets are required, SemVer bump classifications (`major`, `minor`, `patch`), and release automation.
-- **[Development & Contributor Guidelines](./docs/development-guidelines.md)**: Zero-dependency core principles, immutability guarantees, structural vs. identity equality, aggregate boundaries, and quality gate workflows.
-- **[Build Distribution & Packaging Audit](./docs/distribution-audit.md)**: Artifact packaging hygiene, Rslib bundling evaluation, tree-shaking characteristics, and runtime compatibility.
-- **[Performance Benchmarks & Budgets](./docs/benchmarks.md)**: Structural comparison throughput, aggregate event handling efficiency, and package distribution size budgets.
+- **[Semantic Versioning & Changeset Workflow](./docs/contributing/versioning-and-changesets.md)**: Rules for when changesets are required, SemVer bump classifications (`major`, `minor`, `patch`), and release automation.
+- **[Development & Contributor Guidelines](./docs/contributing/development-guidelines.md)**: Zero-dependency core principles, immutability guarantees, structural vs. identity equality, aggregate boundaries, and quality gate workflows.
+- **[Build Distribution & Packaging Audit](./docs/contributing/distribution-audit.md)**: Artifact packaging hygiene, Rslib bundling evaluation, tree-shaking characteristics, and runtime compatibility.
+- **[Performance Benchmarks & Budgets](./docs/contributing/benchmarks.md)**: Structural comparison throughput, aggregate event handling efficiency, and package distribution size budgets.
 
 ---
 
@@ -19,8 +19,10 @@ For in-depth guides, architectural principles, and policies, refer to the dedica
 - `pnpm run bench` - Run Vitest runtime performance microbenchmarks
 - `pnpm run check:exports` - Validate package exports and TypeScript declaration resolution via publint and attw
 - `pnpm run dev` - Build in watch mode
-- `pnpm run docs` - Generate API documentation via TypeDoc
-- `pnpm run docs:watch` - Generate API documentation in watch mode
+- `pnpm run docs` - Build documentation portal via Rspress
+- `pnpm run docs:dev` - Start local documentation dev server via Rspress
+- `pnpm run docs:build` - Build production documentation portal via Rspress
+- `pnpm run docs:preview` - Preview production documentation portal locally
 - `pnpm run test` - Run Vitest test suite
 - `pnpm run lint` - Check formatting and code style with Prettier
 - `pnpm run format` - Format code with Prettier

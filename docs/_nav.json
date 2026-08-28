@@ -1,0 +1,18 @@
+[
+  {
+    "text": "Guide",
+    "link": "/guide/introduction"
+  },
+  {
+    "text": "Concepts",
+    "link": "/concepts/entities"
+  },
+  {
+    "text": "API Reference",
+    "link": "/api/"
+  },
+  {
+    "text": "Contributing",
+    "link": "/contributing/development-guidelines"
+  }
+]

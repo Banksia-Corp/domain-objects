@@ -1,0 +1,22 @@
+[
+  {
+    "name": "development-guidelines",
+    "type": "file",
+    "label": "Development Guidelines"
+  },
+  {
+    "name": "benchmarks",
+    "type": "file",
+    "label": "Performance Benchmarks"
+  },
+  {
+    "name": "distribution-audit",
+    "type": "file",
+    "label": "Distribution Audit"
+  },
+  {
+    "name": "versioning-and-changesets",
+    "type": "file",
+    "label": "Versioning & Changesets"
+  }
+]

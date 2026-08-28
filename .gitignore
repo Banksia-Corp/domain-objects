@@ -5,6 +5,7 @@ node_modules/
 # Build & compilation outputs
 dist/
 build/
+doc_build/
 docs/api/
 *.tsbuildinfo
 *.js.map
