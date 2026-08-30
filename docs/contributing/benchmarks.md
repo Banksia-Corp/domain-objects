@@ -12,20 +12,20 @@ Key areas monitored include:
 
 - **Value Object Structural Comparison**: Throughput and latency of `ValueObject.equals()` across nested properties, primitive attributes, and collections.
 - **Entity & Aggregate Identity Verification**: Throughput of `Entity.equals()` and instance identity checks.
-- **Aggregate Root Event Lifecycle**: Latency of `record()`, `pullEvents()`, and event array allocations during business transaction cycles.
+- **Aggregate Root Event Lifecycle**: Latency of `addDomainEvent()`, `domainEvents`, and `clearEvents()` during business transaction cycles.
 - **Bundle & Distribution Size Budgets**: Ensuring compiled artifacts remain well within compression targets.
 
 ---
 
 ## 2. Size & Performance Budgets
 
-| Metric / Asset                        | Target Budget          | Baseline Measured (v0.0.1) | Notes                               |
-| :------------------------------------ | :--------------------- | :------------------------- | :---------------------------------- |
-| **`dist/index.js` (Raw Size)**        | `< 2.5 KB`             | `1.04 KB`                  | Core compiled ESM output            |
-| **`dist/index.js` (Gzip / Brotli)**   | `< 1.0 KB`             | `238 B`                    | Compressed network payload          |
-| **`ValueObject.equals()` Throughput** | `> 1,000,000 ops/sec`  | `~4.7M ops/sec` (simple)   | Structural equality comparison      |
-| **`Entity.equals()` Throughput**      | `> 15,000,000 ops/sec` | `~27.1M ops/sec`           | Identity comparison                 |
-| **Aggregate Event Recording/Pulling** | `< 0.001 ms / event`   | `~0.0001 ms / event`       | In-memory event queuing & lifecycle |
+| Metric / Asset                         | Target Budget          | Baseline Measured (v0.0.1) | Notes                          |
+| :------------------------------------- | :--------------------- | :------------------------- | :----------------------------- |
+| **`dist/index.js` (Raw Size)**         | `< 2.5 KB`             | `1.04 KB`                  | Core compiled ESM output       |
+| **`dist/index.js` (Gzip / Brotli)**    | `< 1.0 KB`             | `238 B`                    | Compressed network payload     |
+| **`ValueObject.equals()` Throughput**  | `> 1,000,000 ops/sec`  | `~4.7M ops/sec` (simple)   | Structural equality comparison |
+| **`Entity.equals()` Throughput**       | `> 15,000,000 ops/sec` | `~27.1M ops/sec`           | Identity comparison            |
+| **Aggregate Event Recording/Queueing** | `< 0.001 ms / event`   | `~0.0001 ms / event`       | In-memory event lifecycle      |
 
 ---
 

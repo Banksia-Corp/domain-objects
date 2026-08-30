@@ -52,5 +52,5 @@ jobs:
       - name: Check Bundle Size
         run: pnpm run size
 
-      - name: Generate Docs
-        run: pnpm run docs
+      - name: Build Documentation
+        run: pnpm run docs:build
