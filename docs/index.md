@@ -2,7 +2,7 @@
 pageType: home
 
 hero:
-  name: "@banksia/domain-objects"
+  name: "domain-objects"
   text: Domain-Driven Design for TypeScript
   tagline: Ultra-lightweight, zero-dependency building blocks for authoring expressive, invariant-protected domain models.
   actions:
