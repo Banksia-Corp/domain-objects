@@ -21,22 +21,22 @@ When contributing to `@banksia/domain-objects`, you must preserve its foundation
   - Must implement structural equality via `equals(other: ValueObject<T>): boolean`. Two value objects with identical properties are strictly equal regardless of instance reference.
   - Must never possess identity (`id`).
 
-- **Entities (`Entity<TId, TProps>`)**:
-  - Represent concepts with unique identity (`id`) that persists through state changes over time.
-  - Identity equality: Two entities are equal if and only if they share the same class type and identity (`id`).
+- **Entities (`Entity<T>`)**:
+  - Represent concepts with a unique string identity (`id`) that persists through state changes over time.
+  - Identity equality: Two entities are equal if and only if their unique `id` matches.
 
-- **Aggregate Roots (`AggregateRoot<TId, TProps>`)**:
-  - Serve as transactional consistency boundaries and cluster associated entities and value objects.
-  - Manage and encapsulate domain event recording (`record()`, `pullEvents()`, `clearEvents()`).
-  - Outside callers must never mutate aggregate internal entities directly; all state modifications must pass through aggregate root methods.
+- **Aggregate Roots (`AggregateRoot<T>`)**:
+  - Guard business rules and cluster associated entities and values.
+  - Manage and buffer domain events (`addDomainEvent()`, `domainEvents`, `clearEvents()`).
+  - Outside callers must never mutate internal entities directly; all state modifications must pass through aggregate root methods.
 
-- **Domain Events (`DomainEvent<TPayload>`)**:
-  - Represent immutable records of significant occurrences within the domain.
-  - Contain metadata: `eventId` (UUID), `occurredOn` (Date/timestamp), `aggregateId`, `eventName`, and strongly typed `payload`.
+- **Domain Events (`IDomainEvent`)**:
+  - Represent immutable records of business occurrences within the domain.
+  - Contract provides `dateTimeOccurred: Date` and `getAggregateId(): string`.
 
-- **Repository Interfaces (`IRepository<TAggregate, TId>`)**:
-  - Domain layer defines only abstract repository contracts and port interfaces.
-  - Infrastructure implementations (ORM, database drivers, memory stores) remain decoupled and external to this library.
+- **Repository Interfaces (`IRepository<T>`)**:
+  - Generic persistence contract (`save`, `findById`, `findAll`, `update`, `delete`).
+  - The domain layer defines only the interface; concrete database implementations remain decoupled.
 
 ---
 

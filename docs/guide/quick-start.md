@@ -4,9 +4,9 @@ Let's model an e-commerce **Order Fulfillment** domain with currency-safe money 
 
 ---
 
-## 1. Immutable Value Object: `Money`
+## 1. Values: `Money`
 
-Value Objects represent concepts with no persistent identity. They are defined solely by their attributes and are deeply frozen at runtime.
+Values represent concepts with no identity. They are defined solely by their attributes and are immutable.
 
 ```ts
 import { ValueObject } from "@banksia/domain-objects";
@@ -41,9 +41,9 @@ export class Money extends ValueObject<MoneyProps> {
 
 ---
 
-## 2. Child Entity: `OrderItem`
+## 2. Entities: `OrderItem`
 
-Entities are defined by a unique identity that persists across state changes and mutations.
+Entities represent concepts defined by a unique identity that persists across state changes.
 
 ```ts
 import { Entity } from "@banksia/domain-objects";
@@ -66,9 +66,9 @@ export class OrderItem extends Entity<OrderItemProps> {
 
 ---
 
-## 3. Domain Event: `OrderPlacedEvent`
+## 3. Domain Events: `OrderPlacedEvent`
 
-Domain Events capture business state transitions as immutable records for downstream subscribers and asynchronous messaging.
+Domain Events capture business occurrences as immutable records for downstream subscribers and message dispatchers.
 
 ```ts
 import type { IDomainEvent } from "@banksia/domain-objects";
@@ -89,9 +89,9 @@ export class OrderPlacedEvent implements IDomainEvent {
 
 ---
 
-## 4. Aggregate Root: `Order`
+## 4. Aggregates: `Order`
 
-The Aggregate Root guards transactional boundaries and enforces domain invariants. All mutations to child entities must go through root methods.
+The Aggregate Root guards business rules across the entire group. All modifications to child entities and state must go through methods on the root.
 
 ```ts
 import { AggregateRoot } from "@banksia/domain-objects";

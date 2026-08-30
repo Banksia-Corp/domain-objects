@@ -1,6 +1,6 @@
-# Aggregate Roots & Consistency Boundaries
+# Aggregates & Consistency Boundaries
 
-An **Aggregate Root** is a specialized `Entity` that acts as the sole external gateway and guardian for a cluster of associated entities and value objects (an _Aggregate_).
+An **Aggregate Root** is a specialized `Entity` that acts as the single external gateway and guardian for a cluster of related entities and values (an _Aggregate_).
 
 ---
 
@@ -8,9 +8,9 @@ An **Aggregate Root** is a specialized `Entity` that acts as the sole external g
 
 In Domain-Driven Design:
 
-- **Transactional Boundary**: An aggregate marks the boundary within which all business invariants must be maintained consistently in every transaction.
-- **Single Entry Point**: Outside objects hold references only to the Aggregate Root. Child entities cannot be referenced or updated directly from outside the boundary.
-- **Event Recording Hub**: The aggregate root records domain events as business operations occur and buffers them until the aggregate is persisted.
+- **Clear Boundaries**: An aggregate defines the group of related objects whose business rules must be satisfied together.
+- **Single Gateway**: Outside code only interacts with the Aggregate Root. Child entities cannot be modified directly from outside the boundary.
+- **Event Hub**: The aggregate root records domain events as business operations occur and buffers them until the aggregate is persisted.
 
 ---
 
@@ -116,10 +116,10 @@ export class Invoice extends AggregateRoot<InvoiceProps> {
 
 ## Domain Event Lifecycle
 
-1. **State Mutation**: When a business method executes, validate invariants and mutate aggregate state.
-2. **Buffer Event**: Call `this.addDomainEvent(new Event(...))` to buffer the uncommitted event.
-3. **Persist Aggregate**: The repository saves the aggregate to storage within an atomic transaction.
-4. **Dispatch & Clear**: Once storage confirms the commit, the event bus publishes all `aggregate.domainEvents` and calls `aggregate.clearEvents()`.
+1. **State Mutation**: When a business method executes, check rules and update aggregate state.
+2. **Record Event**: Call `this.addDomainEvent(...)` to buffer the uncommitted event.
+3. **Persist Aggregate**: The repository saves the aggregate to storage.
+4. **Dispatch & Clear**: Once storage confirms the save, dispatch `aggregate.domainEvents` and call `aggregate.clearEvents()`.
 
 ```ts
 const invoice = Invoice.createDraft("inv_1", "cust_99");

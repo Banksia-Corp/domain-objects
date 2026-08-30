@@ -1,15 +1,15 @@
 # Value Objects
 
-A **Value Object** describes a characteristic, descriptive element, or quantitative measure in the domain that has **no conceptual identity**. Value Objects are defined strictly by the equality of their attribute values.
+A **Value Object** represents a domain concept defined entirely by its data rather than an identity (such as an address, currency amount, or date range).
 
 ---
 
-## Key Invariants
+## Key Characteristics
 
-1. **No Conceptual Identity**: Value objects do not have an `id`. If two value objects have the same attributes, they are interchangeable.
-2. **Deep Immutability**: Value objects cannot be mutated once created. The constructor automatically executes `Object.freeze` on properties. Any "mutation" operation returns a new instance.
-3. **Structural Equality**: Equality is determined by comparing property values rather than object references.
-4. **Self-Validation**: A value object is guaranteed to be valid throughout its existence. If invalid input is provided, the constructor immediately rejects instantiation.
+1. **No Identity**: Values do not have an `id`. Two values with identical attributes are interchangeable.
+2. **Guaranteed Immutability**: Values cannot be modified after creation. Any operation that changes a value produces a fresh instance.
+3. **Structural Equality**: Equality is determined by comparing property values rather than object memory references.
+4. **Self-Validation**: A value validates its own rules upon creation, guaranteeing it is always valid throughout its lifetime.
 
 ---
 

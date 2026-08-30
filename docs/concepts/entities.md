@@ -1,14 +1,14 @@
 # Entities & Identity
 
-In Domain-Driven Design, an **Entity** represents an individual domain concept defined not by its attributes, but by an explicit, continuous **identity** (`id`) that persists across its entire lifecycle.
+In Domain-Driven Design, an **Entity** represents a domain concept defined by an explicit, continuous **identity** (`id`) rather than its attributes.
 
 ---
 
 ## Key Characteristics
 
-- **Unique Identity**: Every entity possesses a unique string identifier (`_id`).
-- **Lifecycle & Mutability**: Attributes of an entity may change over time as business operations take place, but its identity remains immutable.
-- **Identity-Based Equality**: Two entities with identical attributes are distinct if their IDs differ. Conversely, two entity references with identical IDs represent the same domain entity regardless of any differences in their in-memory property values.
+- **Unique Identity**: Every entity has a unique identifier (`id`).
+- **Persistent Across Changes**: Attributes of an entity may change over time as business operations take place, but its identity remains constant.
+- **Identity-Based Equality**: Two entities with identical attributes are distinct if their IDs differ. Conversely, two entity references with the same ID represent the same domain entity, even if one has newer data in memory.
 
 ---
 
@@ -70,7 +70,7 @@ export class Customer extends Entity<CustomerProps> {
 
 ## Identity Equality (`equals`)
 
-The `equals` method compares entities based on identity rather than memory references:
+The `equals` method compares entities based on their `id` rather than JavaScript object references:
 
 ```ts
 const cust1 = new Customer(
@@ -84,19 +84,19 @@ const cust2 = new Customer(
 );
 
 console.log(cust1.equals(cust2)); // true (matched by id 'cust_001')
-console.log(cust1 === cust2); // false (distinct instances)
+console.log(cust1 === cust2); // false (distinct instances in memory)
 ```
 
 ---
 
 ## Encapsulating Entity Mutations
 
-Directly mutating an entity's properties from external layers violates domain invariants. Expose explicit, intention-revealing methods on the entity:
+Directly mutating an entity's properties from external callers bypasses business rules. Expose explicit domain methods to update state safely:
 
 ```ts
 // ❌ Avoid direct property mutation from external callers:
 // customer.props.email = 'new@example.com';
 
-// ✅ Call intention-revealing domain methods:
+// ✅ Call explicit domain methods:
 customer.changeEmail("alice@company.com");
 ```

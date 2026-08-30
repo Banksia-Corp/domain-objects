@@ -1,6 +1,6 @@
-# Repository Pattern & Persistence Decoupling
+# Repositories & Persistence
 
-The **Repository Pattern** mediates between the domain model and data mapping layers. It provides a collection-oriented interface for accessing, querying, and storing Aggregate Roots while completely isolating domain rules from database concerns.
+A **Repository** provides a collection-like interface for accessing and saving Aggregate Roots, completely isolating business rules from database concerns.
 
 ---
 
@@ -18,8 +18,8 @@ export interface IRepository<T> {
 }
 ```
 
-- **Persistence Ignorance**: The domain layer defines only the interface. Concrete implementations live in the infrastructure layer.
-- **Aggregate Boundary Enforced**: Repositories only load and persist **Aggregate Roots**. Child entities and value objects are persisted through their root.
+- **Persistence Independence**: The domain layer defines only the interface. Real database implementations live in the infrastructure layer.
+- **Aggregate Boundaries**: Repositories only load and save **Aggregate Roots**. Child entities and values are always persisted through their root.
 
 ---
 

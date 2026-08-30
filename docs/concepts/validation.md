@@ -1,12 +1,12 @@
-# Invariant Protection & Error Handling
+# Validation & Business Rules
 
-In Domain-Driven Design, **invariants** are business assertions that must remain true at all times throughout the life of a domain object. An object must never be allowed to enter an invalid state.
+In Domain-Driven Design, an **invariant** is a business rule that must always hold true. A domain object must never be allowed to enter or remain in an invalid state.
 
 ---
 
 ## Defensive Instantiation
 
-Enforce invariants in constructors and static factory methods. If an input is invalid, immediately throw a domain-specific error:
+Enforce rules directly in constructors and factory methods. If an input is invalid, reject instantiation immediately with an error:
 
 ```ts
 import { ValueObject } from "@banksia/domain-objects";
@@ -62,7 +62,7 @@ console.log(email.value); // 'alice@example.com'
 
 ## State Transition Guarding
 
-Aggregate Roots safeguard invariants during multi-step state transitions:
+Aggregate Roots guard business rules during state transitions:
 
 ```ts
 import { AggregateRoot } from "@banksia/domain-objects";

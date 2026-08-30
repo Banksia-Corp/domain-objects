@@ -1,67 +1,80 @@
 # `@banksia/domain-objects`
 
-> Foundational Domain-Driven Design (DDD) building blocks for authoring expressive, type-safe, and invariant-protected domain models in TypeScript.
+> A zero-dependency, ultra-lightweight (~238 B) TypeScript toolkit that provides the foundational building blocks for Domain-Driven Design (DDD).
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero-green.svg)](https://github.com/Banksia-Corp/domain-objects)
-[![Runtime Agnostic](https://img.shields.io/badge/Runtime-Node%20%7C%20Cloudflare%20Workers%20%7C%20Browser-purple.svg)](https://github.com/Banksia-Corp/domain-objects)
+[![Runtime Agnostic](https://img.shields.io/badge/Runtime-Node%20%7C%20Deno%20%7C%20Bun%20%7C%20Workers%20%7C%20Browser-purple.svg)](https://github.com/Banksia-Corp/domain-objects)
 
 ---
 
 ## Table of Contents
 
-- [Overview & Architectural Motivation](#overview--architectural-motivation)
-  - [Rich Domain Models vs. Anemic Data Bags](#rich-domain-models-vs-anemic-data-bags)
+- [Overview & Architecture](#overview--architecture)
+  - [Rich Domain Models vs. Passive Data Bags](#rich-domain-models-vs-passive-data-bags)
   - [Architecture Topology](#architecture-topology)
 - [Installation](#installation)
 - [Quickstart in 5 Minutes](#quickstart-in-5-minutes)
 - [Core DDD Building Blocks Deep Dive](#core-ddd-building-blocks-deep-dive)
-  - [`ValueObject<T>` (Structural Immutability)](#valueobjectt-structural-immutability)
-  - [`Entity<T>` (Identity & Lifecycle)](#entityt-identity--lifecycle)
-  - [`AggregateRoot<T>` (Consistency & Domain Event Hub)](#aggregateroott-consistency--domain-event-hub)
-  - [`IDomainEvent` (State Transition Records)](#idomainevent-state-transition-records)
-  - [`IRepository<T>` (Persistence Abstraction)](#irepositoryt-persistence-abstraction)
+  - [`ValueObject<T>` (Values & Immutability)](#valueobjectt-values--immutability)
+  - [`Entity<T>` (Entities & Identity)](#entityt-entities--identity)
+  - [`AggregateRoot<T>` (Aggregates & Boundaries)](#aggregateroott-aggregates--boundaries)
+  - [`IDomainEvent` (Domain Events)](#idomainevent-domain-events)
+  - [`IRepository<T>` (Repositories & Persistence)](#irepositoryt-repositories--persistence)
 - [Runtime Validation & Invariant Protection](#runtime-validation--invariant-protection)
 - [Application Service Orchestration (Command Pattern)](#application-service-orchestration-command-pattern)
 - [Infrastructure & Persistence Patterns (Cloudflare D1)](#infrastructure--persistence-patterns-cloudflare-d1)
-- [Reactive UI Integration with `@banksia/signals`](#reactive-ui-integration-with-banksiasignals)
+- [Reactivity with `@banksia/signals`](#reactivity-with-banksiasignals)
 - [API Reference Matrix](#api-reference-matrix)
 - [Development & Testing](#development--testing)
 
 ---
 
-## Overview & Architectural Motivation
+## Overview & Architecture
 
-In fast-growing software systems, business logic often scatters across ad-hoc API route handlers, UI components, raw SQL queries, and ORM lifecycle hooks. Data objects degenerate into "anemic" property bags where invariants can be bypassed and inconsistent states become possible.
+As TypeScript applications grow, business rules scatter across:
 
-`@banksia/domain-objects` provides zero-dependency base classes to enforce tactical Domain-Driven Design (DDD) in modern TypeScript:
+- HTTP route handlers and API controllers
+- Database migration hooks and ORM lifecycle events
+- UI form handlers and client-side components
+- Ad-hoc database queries and triggers
 
-- **Encapsulated Invariants**: Business validation and rules live directly inside the domain model, preventing invalid state from ever existing.
-- **Explicit Consistency Boundaries**: Aggregate roots isolate transactional boundaries, ensuring multi-entity state mutations remain atomic.
-- **Structural Immutability**: Value objects provide deep runtime immutability (`Object.freeze`) and deterministic structural equality comparisons.
-- **Decoupled Architecture**: Domain models remain 100% agnostic of transport layers (Hono, HTTP, gRPC) and database engines (Cloudflare D1, SQLite, PostgreSQL).
+When logic is scattered, domain data turns into **passive data bags**:
 
-### Rich Domain Models vs. Anemic Data Bags
+- **Ambiguous ownership**: No single file or component owns the business concept, leading to conflicting logic and guesswork.
+- **Rules are easily bypassed**: Any function can mutate properties directly, allowing invalid states to exist.
+- **Validation is duplicated**: Every endpoint re-implements defensive checks, creating drift and bugs.
+- **Side effects are tangled with persistence**: Mutating data is intertwined with sending emails, calling external APIs, or writing database records.
+- **Testing is slow and brittle**: Verifying a simple business rule requires spinning up mock databases or complex test fixtures.
 
-| Dimension             | Anemic Data Bag Approach ❌                            | Rich Domain Model Approach (`@banksia/domain-objects`) ✅ |
+`@banksia/domain-objects` provides zero-dependency base classes to encapsulate state and rules directly within the domain model:
+
+- **Clear Ownership and Boundaries**: Every domain concept has a designated owner guarding its data and related objects.
+- **Rules Live Inside the Model**: Business rules live directly within domain classes, ensuring invalid state can never exist.
+- **Guaranteed Immutability**: Values are strictly immutable, preventing unexpected side effects across your codebase.
+- **Decoupled Architecture**: Domain models remain 100% independent of transport layers (Hono, Express, Fastify) and database engines (Cloudflare D1, SQLite, PostgreSQL).
+
+### Rich Domain Models vs. Passive Data Bags
+
+| Dimension             | Passive Data Bag Approach ❌                           | Rich Domain Model (`@banksia/domain-objects`) ✅          |
 | :-------------------- | :----------------------------------------------------- | :-------------------------------------------------------- |
 | **Logic Placement**   | Procedural services, controllers, or database triggers | Encapsulated within domain entities and value objects     |
-| **State Validation**  | Fragmented across endpoints and forms                  | Guaranteed at instantiation and on state transition       |
-| **Identity vs Value** | Everything is a plain object or row ID                 | Explicit distinction between `Entity` and `ValueObject`   |
+| **Validation**        | Fragmented across endpoints and request bodies         | Guaranteed at instantiation and on every state transition |
+| **Identity vs Value** | Everything is an arbitrary object or row ID            | Explicit distinction between `Entity` and `ValueObject`   |
 | **Side Effects**      | Ad-hoc service calls intertwined with mutations        | Recorded explicitly as `IDomainEvent` instances           |
-| **Testability**       | Requires database mocking or complex fixtures          | Pure in-memory unit tests without external I/O            |
+| **Testing**           | Requires database mocking or complex fixtures          | Pure in-memory unit tests without external I/O            |
 
 ### Architecture Topology
 
 ```mermaid
 flowchart LR
-    Transport["API / Controller\n(Hono / Workers)"] --> AppService["Application Service\n(Use Case / Command Handler)"]
-    AppService --> Aggregate["Aggregate Root\n(Transactional Consistency Boundary)"]
+    Transport["Transport Layer\n(Hono / Express / Next.js)"] --> AppService["Application Layer\n(Use Cases / Command Handlers)"]
+    AppService --> Aggregate["Aggregate Root\n(Consistency Boundary)"]
     Aggregate --> ChildEntities["Child Entities\n(Identity-Tracked)"]
-    Aggregate --> ValueObjects["Value Objects\n(Immutable Structural Values)"]
-    Aggregate -. records .-> DomainEvents["Domain Events\n(Uncommitted Side Effects)"]
-    AppService --> Repository["IRepository<T>\n(Persistence Abstraction)"]
-    AppService -. dispatches .-> EventBus["Event Dispatcher / Queue\n(Cloudflare Queues / Kafka)"]
+    Aggregate --> ValueObjects["Value Objects\n(Immutable Values)"]
+    Aggregate -. records .-> DomainEvents["Domain Events\n(Side Effect Records)"]
+    AppService --> Repository["IRepository\n(Persistence Abstraction)"]
+    AppService -. dispatches .-> EventBus["Event Dispatcher\n(Queues / Message Brokers)"]
 ```
 
 ---
@@ -590,9 +603,9 @@ export class D1OrderRepository implements IRepository<Order> {
 
 ---
 
-## Reactive UI Integration with `@banksia/signals`
+## Reactivity with `@banksia/signals`
 
-For client-side domain stores and interactive applications, domain objects can be paired with `@banksia/signals` for fine-grained, zero-boilerplate UI updates:
+For client-side domain stores and interactive applications, domain objects can be paired with `@banksia/signals` for reactivity:
 
 ```ts
 import { makeReactive } from "@banksia/signals";

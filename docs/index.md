@@ -3,8 +3,8 @@ pageType: home
 
 hero:
   name: "@banksia/domain-objects"
-  text: Tactical Domain-Driven Design for TypeScript
-  tagline: Enterprise-grade, type-safe, and zero-dependency building blocks for authoring expressive, invariant-protected domain models.
+  text: Domain-Driven Design for TypeScript
+  tagline: Ultra-lightweight, zero-dependency building blocks for authoring expressive, invariant-protected domain models.
   actions:
     - theme: brand
       text: Get Started
@@ -18,21 +18,21 @@ hero:
 
 features:
   - title: Zero Runtime Dependencies
-    details: Pure modern TypeScript relying strictly on native ECMAScript standards. Fully compatible with Node.js, Bun, Deno, and Cloudflare Workers.
+    details: Relies strictly on native ECMAScript. Compatible with Node.js, Deno, Bun, Cloudflare Workers, and modern browsers.
     icon: ⚡
-  - title: Tactical DDD Primitives
-    details: First-class base classes for Entity, ValueObject, AggregateRoot, DomainEvent, and IRepository abstractions.
+  - title: Domain Modeling Primitives
+    details: First-class base classes for Values, Entities, Aggregates, Domain Events, and Repositories.
     icon: 🧱
-  - title: Structural Immutability
-    details: Deep runtime freezing with Object.freeze and deterministic, high-throughput structural equality for Value Objects.
+  - title: Guaranteed Immutability
+    details: Deep runtime freezing and deterministic structural equality for Value Objects without boilerplate.
     icon: 🔒
-  - title: Transactional Consistency
-    details: Aggregate Roots guard business invariants, enforce consistency boundaries, and buffer domain events for atomic side effects.
+  - title: Clear Boundaries & Ownership
+    details: Aggregate Roots guard business invariants, coordinate related objects, and buffer domain events.
     icon: 🛡️
-  - title: Audited High Performance
-    details: Microbenchmark-verified performance characteristics with tiny package distribution sizes (<1.5 kB gzipped).
+  - title: Fast, Mock-Free Testing
+    details: Pure in-memory domain models with zero external I/O allow complete test suites to run in milliseconds.
     icon: 🚀
-  - title: Modern Tooling & Documentation
-    details: Built with Rspack/Rslib and documented with Rspress and TypeDoc for instant full-text search and comprehensive symbol navigation.
-    icon: 📚
+  - title: Ultra-Lightweight Footprint
+    details: ~238 B compressed, under 1.5 kB gzipped.
+    icon: 📦
 ---

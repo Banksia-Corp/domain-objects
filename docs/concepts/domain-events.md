@@ -1,6 +1,6 @@
 # Domain Events & Dispatching
 
-A **Domain Event** represents an immutable historical record of something meaningful that occurred within a domain boundary. Domain Events enable decoupled, asynchronous communication across aggregates, bounded contexts, and microservices.
+A **Domain Event** represents an immutable record of something meaningful that occurred in the domain. Domain Events enable decoupled, asynchronous communication across aggregates and external systems.
 
 ---
 
@@ -46,7 +46,7 @@ export class UserRegisteredEvent implements IDomainEvent {
 
 ## Recording & Dispatching Patterns
 
-Domain events are buffered inside the Aggregate Root during state transitions and published after successful transaction commit:
+Domain events are recorded inside the Aggregate Root as business actions occur, and dispatched only after changes are successfully persisted to storage:
 
 ```mermaid
 sequenceDiagram
@@ -101,10 +101,10 @@ export class RegisterUserService {
 
 ---
 
-## Event Sourcing & Integration
+## Messaging & Queue Integration
 
 Because `IDomainEvent` instances are simple, JSON-serializable records with a clear timestamp and aggregate identifier, they integrate naturally with:
 
 - **Cloudflare Queues**: Serverless asynchronous event workers.
-- **Kafka / RabbitMQ / AWS SQS**: Microservice event-driven choreography.
-- **Outbox Pattern**: Storing events in a transactional outbox table before broadcasting.
+- **Kafka / RabbitMQ / AWS SQS**: Asynchronous event choreography across microservices.
+- **Transactional Outbox Pattern**: Storing events in an outbox table before broadcasting.

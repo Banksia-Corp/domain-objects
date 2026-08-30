@@ -55,9 +55,9 @@ If you are using a monorepo setup (such as pnpm workspaces, Turborepo, or Nx), r
 `@banksia/domain-objects` has **zero external runtime dependencies** and relies exclusively on standard ECMAScript features. It runs seamlessly across all modern JavaScript runtimes:
 
 - **Node.js**: `>= 22.0.0`
-- **Cloudflare Workers**: Full support (V8 isolates)
-- **Bun**: `>= 1.0`
 - **Deno**: `>= 1.40`
+- **Bun**: `>= 1.0`
+- **Cloudflare Workers**: Full support (V8 isolates)
 - **Browser**: Modern evergreen browsers (ES2022+)
 
 ---
